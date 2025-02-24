@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,3 +28,109 @@
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script type="module" defer src="admin.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        #messages {
+            text-align: left;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 5px;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Admin Panel</h3>
+        <div id="messages">Messages will be displayed here...</div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyArbqYp3-y6ksdTRCxfijxJG_KH4YiYEhk",
+            authDomain: "anonymouss-af8fd.firebaseapp.com",
+            projectId: "anonymouss-af8fd",
+            storageBucket: "anonymouss-af8fd.firebasestorage.app",
+            messagingSenderId: "166541019556",
+            appId: "1:166541019556:web:905adf89f0dd3339cf1931"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function fetchMessages() {
+            const password = prompt("Enter Admin Password:");
+            if (password !== "admin123") {
+                alert("Incorrect password!");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const messagesContainer = document.getElementById("messages");
+            messagesContainer.innerHTML = "Loading messages...";
+
+            const querySnapshot = await getDocs(collection(db, "messages"));
+            let messages = "";
+            querySnapshot.forEach((doc) => {
+                messages += `<p>${doc.data().text}</p>`;
+            });
+
+            messagesContainer.innerHTML = messages || "No messages found.";
+        }
+
+        function logout() {
+            window.location.href = "index.html";
+        }
+
+        fetchMessages();
+    </script>
+</body>
+</html>
+>>>>>>> a076983 (Updated Anonymous Messaging system with Firebase Firestore integration)

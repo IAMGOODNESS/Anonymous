@@ -2,18 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonymous</title>
+    <title>Anonymous Messaging</title>
+    <script type="module" defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        @media (max-width: 500px) {
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+            input, button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="box">
-    <h3>Send an Anonymous Message To the Tribal Chief</h3>
-    <input id="input" type="text" placeholder="Send a message">
-    <button onclick="sendMessage()">Send</button>
-    <button onclick="receiveMessage()">Admin </button>
-</div>
-    
-    <script src="script.js"></script>
+    <div class="container">
+        <h3>Send an Anonymous Message</h3>
+        <input id="messageInput" type="text" placeholder="Type your message...">
+        <button id="sendBtn">Send</button>
+        <button onclick="location.href='admin.html'">Admin</button>
+    </div>
+
+    <script type="module">
+        // Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyArbqYp3-y6ksdTRCxfijxJG_KH4YiYEhk",
+            authDomain: "anonymouss-af8fd.firebaseapp.com",
+            projectId: "anonymouss-af8fd",
+            storageBucket: "anonymouss-af8fd.firebasestorage.app",
+            messagingSenderId: "166541019556",
+            appId: "1:166541019556:web:905adf89f0dd3339cf1931"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById("sendBtn").addEventListener("click", async () => {
+            let message = document.getElementById("messageInput").value.trim();
+            if (message === "") {
+                alert("Please enter a message.");
+                return;
+            }
+            await addDoc(collection(db, "messages"), { text: message });
+            alert("Message sent anonymously!");
+            document.getElementById("messageInput").value = "";
+        });
+    </script>
 </body>
 </html>
