@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="anony">
+        <h3 id="output"></h3>
+        <button onclick="log()">Log out </button>
+    </div>
+    <script>
+        let arr = JSON.parse(localStorage.getItem("messages")) || []; // Load messages
+        
+        if (arr.lenght>0) {
+            document.getElementById("output").innerHTML = "no message"   
+        }
+        else{
+            document.getElementById("output").innerHTML = arr.join("<br>")
+        }
+        function log(){
+            window.location.href = "index.html"; 
+        }
+    </script>
+
+</body>
+</html>

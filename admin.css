@@ -1,0 +1,17 @@
+#output{
+    background-color: aqua;
+}
+button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+button:hover {
+    background: #0056b3;
+}
